@@ -7,21 +7,38 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Util {
-    // реализуйте настройку соеденения с
+    private static Util util;
+    public static Util getUtil() {
+        if (util == null) {
+            util = new Util();
+        }
+        return util;
+    }
     public Util () {
-
     }
     private static final String URL = "jdbc:mysql://localhost:3306/kataex1";
     private static final String UNAME = "root";
-    private static final String UPASSWORD = "721408Dd";
+    private static final String UPASSWORD = "root";
 
 
-    public Statement getConnection() {
+
+
+    public Connection getConnection() {
         try {
             Connection connection = DriverManager.getConnection(URL, UNAME, UPASSWORD);
-            return connection.createStatement();
+            return connection;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+    public Statement getStatement() {
+        try {
+            return getConnection().createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
